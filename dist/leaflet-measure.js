@@ -655,6 +655,7 @@
                 opacity: 0
             }).addTo(this._layer),
             this._setCaptureMarkerIcon(),
+            this._map.doubleClickZoom.disable()
             this._captureMarker
                 .on("mouseout", this._handleMapMouseOut, this)
                 .on("dblclick", this._handleMeasureDoubleClick, this)
@@ -666,6 +667,7 @@
             this._updateMeasureStartedNoPoints(),
             this._map.fire("measurestart", null, !1)
             this._map.on("click", this._handleMeasureClick, this)
+            this._map.on("dblclick", this._handleMeasureDoubleClick, this)
         },
         _finishMeasure: function() {
             var e = L.extend({}, this._resultsModel, {
@@ -674,6 +676,9 @@
             this._locked = !1,
             L.DomEvent.off(this._container, "mouseover", this._handleMapMouseOut, this), this._clearMeasure(), this._captureMarker.off("mouseout", this._handleMapMouseOut, this).off("dblclick", this._handleMeasureDoubleClick, this).off("click", this._handleMeasureClick, this), this._map.off("mousemove", this._handleMeasureMove, this).off("mouseout", this._handleMapMouseOut, this).off("move", this._centerCaptureMarker, this).off("resize", this._setCaptureMarkerIcon, this), this._layer.removeLayer(this._measureVertexes).removeLayer(this._captureMarker), this._measureVertexes = null, this._updateMeasureNotStarted(), this._collapse(), this._map.fire("measurefinish", e, !1)
             this._map.off("click", this._handleMeasureClick, this)
+            this._map.off("click", this._handleMeasureClick, this)
+            this._map.off("dblclick", this._handleMeasureDoubleClick, this)
+            this._map.doubleClickZoom.enable()
         },
         _clearMeasure: function() {
             this._latlngs = [], this._resultsModel = null, this._measureVertexes.clearLayers(), this._measureDrag && this._layer.removeLayer(this._measureDrag), this._measureArea && this._layer.removeLayer(this._measureArea), this._measureBoundary && this._layer.removeLayer(this._measureBoundary), this._measureDrag = null, this._measureArea = null, this._measureBoundary = null
