@@ -1,5 +1,5 @@
 var finalColor = '#00B4AB'
-var maxArea = 500000000
+var maxArea = 50000000
 ! function(e) {
     function t(n) {
         if (r[n]) return r[n].exports;
