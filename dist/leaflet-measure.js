@@ -1,3 +1,5 @@
+var finalColor = '#00B4AB'
+var maxArea = 500000000
 ! function(e) {
     function t(n) {
         if (r[n]) return r[n].exports;
@@ -593,8 +595,8 @@
             primaryLengthUnit: "feet",
             secondaryLengthUnit: "miles",
             primaryAreaUnit: "acres",
-            activeColor: "#ABE67E",
-            completedColor: "#C8F2BE",
+            activeColor: finalColor,
+            completedColor: finalColor,
             captureZIndex: 1e4,
             popupOptions: {
                 className: "leaflet-measure-resultpopup",
@@ -648,6 +650,7 @@
             f.hide(this.$startHelp), f.show(this.$results), f.show(this.$measureTasks), f.hide(this.$startPrompt), f.show(this.$measuringPrompt)
         },
         _startMeasure: function() {
+            finalColor = '#00B4AB'
             this._locked = !0,
             this._measureVertexes = L.featureGroup().addTo(this._layer), this._captureMarker = L.marker(this._map.getCenter(), {
                 clickable: !0,
@@ -722,6 +725,9 @@
                 return [(0, d.numberFormat)(e * i.factor, i.decimals, r || ".", n || ","), o[i.display] || i.display].join(" ")
             }
             var n = this.options.units;
+            if (e.area > maxArea) {
+                finalColor = '#df1212'
+            }
             return {
                 lengthDisplay: t(e.length, this.options.primaryLengthUnit, this.options.decPoint, this.options.thousandsSep),
                 areaDisplay: t(e.area, this.options.primaryAreaUnit, this.options.decPoint, this.options.thousandsSep)
@@ -1561,7 +1567,7 @@
         }(),
         i = {
             activeColor: "#ABE67E",
-            completedColor: "#C8F2BE"
+            completedColor: finalColor
         },
         s = function() {
             function e(t) {
@@ -1618,16 +1624,16 @@
                         },
                         resultArea: {
                             clickable: !0,
-                            color: this._options.completedColor,
+                            color: finalColor,
                             weight: 2,
                             opacity: .9,
-                            fillColor: this._options.completedColor,
+                            fillcolor: finalColor,
                             fillOpacity: .2,
                             className: "layer-measure-resultarea"
                         },
                         resultLine: {
                             clickable: !0,
-                            color: this._options.completedColor,
+                            color: finalColor,
                             weight: 3,
                             opacity: .9,
                             fill: !1,
@@ -1636,10 +1642,10 @@
                         resultPoint: {
                             clickable: !0,
                             radius: 4,
-                            color: this._options.completedColor,
+                            color: finalColor,
                             weight: 2,
                             opacity: 1,
-                            fillColor: this._options.completedColor,
+                            fillcolor: finalColor,
                             fillOpacity: .7,
                             className: "layer-measure-resultpoint"
                         }
