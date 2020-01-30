@@ -1,5 +1,5 @@
-var finalColor = '#00B4AB'
-var maxArea = 50000000
+var finalColor = '#00B4AB' // not currently used but keeping here just in case
+var maxArea = 50000000 //  ^same
 ! function(e) {
     function t(n) {
         if (r[n]) return r[n].exports;
@@ -632,7 +632,7 @@ var maxArea = 50000000
             var n = (0, c.selectOne)(".js-start", t),
                 o = (0, c.selectOne)(".js-cancel", t),
                 i = (0, c.selectOne)(".js-finish", t);
-            this.$startPrompt = (0, c.selectOne)(".js-startprompt", t), this.$measuringPrompt = (0, c.selectOne)(".js-measuringprompt", t), this.$startHelp = (0, c.selectOne)(".js-starthelp", t), this.$results = (0, c.selectOne)(".js-results", t), this.$measureTasks = (0, c.selectOne)(".js-measuretasks", t), this._collapse(), this._updateMeasureNotStarted(), L.Browser.android || (L.DomEvent.on(t, "mouseenter", this._expand, this), L.DomEvent.on(t, "mouseleave", this._collapse, this)), L.DomEvent.on(r, "click", L.DomEvent.stop), L.Browser.touch ? L.DomEvent.on(r, "click", this._expand, this) : L.DomEvent.on(r, "focus", this._expand, this), L.DomEvent.on(n, "click", L.DomEvent.stop), L.DomEvent.on(n, "click", this._startMeasure, this), L.DomEvent.on(o, "click", L.DomEvent.stop), L.DomEvent.on(o, "click", this._finishMeasure, this), L.DomEvent.on(i, "click", L.DomEvent.stop), L.DomEvent.on(i, "click", this._handleMeasureDoubleClick, this)
+            this.$startPrompt = (0, c.selectOne)(".js-startprompt", t), this.$measuringPrompt = (0, c.selectOne)(".js-measuringprompt", t), this.$startHelp = (0, c.selectOne)(".js-starthelp", t), this.$results = (0, c.selectOne)(".js-results", t), this.$measureTasks = (0, c.selectOne)(".js-measuretasks", t), this._collapse(), this._updateMeasureNotStarted(), L.Browser.android || (L.DomEvent.on(t, "mouseenter", this._expand, this), L.DomEvent.on(t, "mouseleave", this._collapse, this)), L.DomEvent.on(r, "click", L.DomEvent.stop), L.Browser.touch ? L.DomEvent.on(r, "click", this._expand, this) : L.DomEvent.on(r, "focus", this._expand, this), L.DomEvent.on(n, "click", L.DomEvent.stop), L.DomEvent.on(n, "click", this._startMeasure, this), L.DomEvent.on(o, "click", L.DomEvent.stop), L.DomEvent.on(o, "click", this._cancelMeasure, this), L.DomEvent.on(i, "click", L.DomEvent.stop), L.DomEvent.on(i, "click", this._handleMeasureDoubleClick, this)
         },
         _expand: function() {
             f.hide(this.$toggle), f.show(this.$interaction)
@@ -679,6 +679,15 @@ var maxArea = 50000000
             this._locked = !1,
             L.DomEvent.off(this._container, "mouseover", this._handleMapMouseOut, this), this._clearMeasure(), this._captureMarker.off("mouseout", this._handleMapMouseOut, this).off("dblclick", this._handleMeasureDoubleClick, this).off("click", this._handleMeasureClick, this), this._map.off("mousemove", this._handleMeasureMove, this).off("mouseout", this._handleMapMouseOut, this).off("move", this._centerCaptureMarker, this).off("resize", this._setCaptureMarkerIcon, this), this._layer.removeLayer(this._measureVertexes).removeLayer(this._captureMarker), this._measureVertexes = null, this._updateMeasureNotStarted(), this._collapse(), this._map.fire("measurefinish", e, !1)
             this._map.off("click", this._handleMeasureClick, this)
+            this._map.off("dblclick", this._handleMeasureDoubleClick, this)
+            this._map.doubleClickZoom.enable()
+        },
+        _cancelMeasure: function() {
+            var e = L.extend({}, this._resultsModel, {
+                points: this._latlngs
+            });
+            this._locked = !1,
+            L.DomEvent.off(this._container, "mouseover", this._handleMapMouseOut, this), this._clearMeasure(), this._captureMarker.off("mouseout", this._handleMapMouseOut, this).off("dblclick", this._handleMeasureDoubleClick, this).off("click", this._handleMeasureClick, this), this._map.off("mousemove", this._handleMeasureMove, this).off("mouseout", this._handleMapMouseOut, this).off("move", this._centerCaptureMarker, this).off("resize", this._setCaptureMarkerIcon, this), this._layer.removeLayer(this._measureVertexes).removeLayer(this._captureMarker), this._measureVertexes = null, this._updateMeasureNotStarted(), this._collapse(), this._map.fire("measurecancel", e, !1)
             this._map.off("click", this._handleMeasureClick, this)
             this._map.off("dblclick", this._handleMeasureDoubleClick, this)
             this._map.doubleClickZoom.enable()
@@ -1721,9 +1730,9 @@ var maxArea = 50000000
 }, function(e, t, r) {
     e.exports = '<div class=group> <p class="lastpoint heading">Last point</p> <p>{{ model.lastCoord.dms.y }} <span class=coorddivider>/</span> {{ model.lastCoord.dms.x }}</p> <p>{{ numberFormat(model.lastCoord.dd.y, 6) }} <span class=coorddivider>/</span> {{ numberFormat(model.lastCoord.dd.x, 6) }}</p> </div> <% if (model.pointCount > 1) { %> <div class=group> <p><span class=heading>Path distance</span> {{ model.lengthDisplay }}</p> </div> <% } %> <% if (model.pointCount > 2) { %> <div class=group> <p><span class=heading>Area</span> {{ model.areaDisplay }}</p> </div> <% } %> '
 }, function(e, t, r) {
-    e.exports = '<h3>Point location</h3> <p>{{ model.lastCoord.dms.y }} <span class=coorddivider>/</span> {{ model.lastCoord.dms.x }}</p> <p>{{ numberFormat(model.lastCoord.dd.y, 6) }} <span class=coorddivider>/</span> {{ numberFormat(model.lastCoord.dd.x, 6) }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center on this location</a></li> <li><a href=# class="js-deletemarkup deletemarkup">Delete</a></li> </ul> '
+    e.exports = '<h5 class=measure-header>Point location</h5> <p>{{ model.lastCoord.dms.y }}</p> <p>{{ model.lastCoord.dms.x }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center</a></li> <li><a href=# class="js-deletemarkup deletemarkup">Remove</a></li> </ul> '
 }, function(e, t, r) {
-    e.exports = '<h5>Measurement(s):</h5> <p><strong>Length: </strong>{{ model.lengthDisplay }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center</a></li> <li><a href=# class="js-deletemarkup deletemarkup">Delete</a></li> </ul> '
+    e.exports = '<h5 class=measure-header>Measurement(s):</h5> <p><strong>Length: </strong>{{ model.lengthDisplay }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center</a></li>  <li><a href=# class="js-deletemarkup deletemarkup">Remove</a></li> </ul> '
 }, function(e, t, r) {
-    e.exports = '<h5>Measurement(s):</h5> <p><strong>Area: </strong>{{ model.areaDisplay }}</p> <p><strong>Perimeter: </strong>{{ model.lengthDisplay }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center</a></li> <li><a href=# class="js-deletemarkup deletemarkup">Delete</a></li> </ul> '
+    e.exports = '<h5 class=measure-header>Measurement(s):</h5> <p><strong>Area: </strong>{{ model.areaDisplay }}</p> <p><strong>Perimeter: </strong>{{ model.lengthDisplay }}</p> <ul class=tasks> <li><a href=# class="js-zoomto zoomto">Center</a></li> </ul> '
 }]);
